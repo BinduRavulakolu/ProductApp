@@ -27,8 +27,10 @@ public class ProductServiceImpl implements ProductService{
 		Optional<Product> optionalProduct = productRepository.findById(productId);
 		if(optionalProduct.isPresent())
 			return optionalProduct.get();
+		System.out.println(optionalProduct.get());
 		throw new ProductNotFoundException("Product does not exists");
 	}
+	
 	@Override
 	public Product updateProduct(Product product) {
 		

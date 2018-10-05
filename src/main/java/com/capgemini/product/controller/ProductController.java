@@ -20,56 +20,50 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@PostMapping("/product")
-	public ResponseEntity<Product> addProduct(@RequestBody Product product){
-	  
-		ResponseEntity<Product> responseEntity=new ResponseEntity<Product>(productService.addProduct(product), HttpStatus.OK);
+	public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+
+		ResponseEntity<Product> responseEntity = new ResponseEntity<Product>(productService.addProduct(product),
+				HttpStatus.OK);
 		return responseEntity;
 	}
-	
-	
+
 	@PutMapping("/product")
-	public ResponseEntity<Product> updateProduct(@RequestBody Product product){
-		try{
-			Product p=productService.findProductById(product.getProductId());
-			if(p!=null)
-		return new ResponseEntity<Product>(productService.updateProduct(product), HttpStatus.OK);
-	      }
-		catch(ProductNotFoundException exception) {
-			//logged the exception
+	public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+		try {
+			Product p = productService.findProductById(product.getProductId());
+			if (p != null)
+				return new ResponseEntity<Product>(productService.updateProduct(product), HttpStatus.OK);
+		} catch (ProductNotFoundException exception) {
+			// logged the exception
 		}
 		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
 	}
-	
+
 	@GetMapping("/product/{productId}")
 	public ResponseEntity<Product> findProductById(@PathVariable int productId) {
 		try {
-		Product p=productService.findProductById(productId);
-		if(p!=null)
-			return new ResponseEntity<Product>(p,HttpStatus.OK);
-		}
-		catch(ProductNotFoundException exception) {
-			
+			Product p = productService.findProductById(productId);
+			if (p != null)
+				return new ResponseEntity<Product>(p, HttpStatus.OK);
+		} catch (ProductNotFoundException exception) {
+
 		}
 		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-		
 	}
-	
+
 	@DeleteMapping("/product/{productId}")
-	public ResponseEntity<Product> deleteProduct(@PathVariable int productId)
-	{
+	public ResponseEntity<Product> deleteProduct(@PathVariable int productId) {
 		try {
-		Product p=productService.findProductById(productId);
-		if(p!=null)
-			productService.deleteProduct(productId);
+			Product p = productService.findProductById(productId);
+			if (p != null)
+				productService.deleteProduct(productId);
 			return new ResponseEntity<Product>(HttpStatus.OK);
-	}
-		catch(ProductNotFoundException exception) {
-			
+		} catch (ProductNotFoundException exception) {
+
 		}
 		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
 	}
-	
-	
+
 }
